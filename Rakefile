@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "database-tasks"
   gem.homepage = "http://github.com/samuelreh/database-tasks"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Rake tasks for Sequel ORM}
+  gem.description = %Q{Rake tasks for Sequel ORM including dropping, creating and migrating}
   gem.email = "samuelreh@gmail.com"
   gem.authors = ["Sam Reh"]
   # dependencies defined in Gemfile
