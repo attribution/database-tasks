@@ -31,15 +31,17 @@ namespace :db do
         puts 'You must specify a migration name (e.g. rake generate:migration[create_events])!'
         exit false
       end
-  
+
       content = "Sequel.migration do\n  change do\n    \n  end\nend\n"
       timestamp = Time.now.to_i
-      filename = File.join(File.expand_path('../../', __FILE__), 'db', 'migrations', "#{timestamp}_#{args[:name]}.rb")
-  
-      File.open(filename, 'w') do |f|
-        f.puts content
+      filename = "#{timestamp}_#{args[:name]}.rb"
+
+      Dir.chdir(File.join('db', 'migrations')) do
+        File.open(filename, 'w') do |f|
+          f.puts content
+        end
       end
-  
+
       puts "Created the migration #{filename}"
     end
   end
