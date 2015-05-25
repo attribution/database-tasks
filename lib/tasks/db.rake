@@ -24,6 +24,11 @@ namespace :db do
     `createdb "#{db_name}"`
   end
 
+  desc "Seed the database"
+  task seed: :environment do
+    require './db/seeds'
+  end
+
   namespace :generate do
     desc 'Generate a timestamped, empty Sequel migration.'
     task :migration, :name do |_, args|
