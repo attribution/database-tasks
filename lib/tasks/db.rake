@@ -29,6 +29,11 @@ namespace :db do
     require './db/seeds'
   end
 
+  desc "Dump DB schema to db/schema.rb"
+  task :schema do
+    `sequel -d #{db_path} > ./db/schema.rb`
+  end
+
   namespace :generate do
     desc 'Generate a timestamped, empty Sequel migration.'
     task :migration, :name do |_, args|
@@ -51,10 +56,13 @@ namespace :db do
     end
   end
 
-  def db_name
+  def db_path
     yaml = YAML.load_file(File.join('config', 'database.yml'))
-    url = yaml[ENV['RACK_ENV'] || 'development']
-    url.split('/')[-1]
+    yaml[ENV['RACK_ENV'] || 'development']
+  end
+
+  def db_name
+    db_path.split('/')[-1]
   end
 end
 
