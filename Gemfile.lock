@@ -7,7 +7,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    sequel (5.36.0)
+    sequel (5.38.0)
 
 PLATFORMS
   ruby
