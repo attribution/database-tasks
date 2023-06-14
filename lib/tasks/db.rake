@@ -7,7 +7,7 @@ namespace :db do
     allow_missing = !args[:allow_missing].nil?
     Sequel::Migrator.run(DB, "db/migrations", allow_missing_migration_files: allow_missing)
   end
- 
+
   desc "Rollback the database"
   task rollback: :environment do
     Sequel.extension :migration
@@ -16,7 +16,7 @@ namespace :db do
     puts "Rolling back to #{target}"
     Sequel::Migrator.run(DB, "db/migrations", target: version, allow_missing_migration_files: true)
   end
- 
+
   desc "Drop the database"
   task :drop do
     `dropdb "#{db_name}"`
@@ -35,6 +35,11 @@ namespace :db do
   desc "Dump DB schema to db/schema.rb"
   task :schema do
     `sequel -d #{db_path} > ./db/schema.rb`
+  end
+
+  desc "Dump DB structure to db/structure.sql"
+  task :structure do
+    `pg_dump --no-privileges --no-owner --schema-only #{db_path} > ./db/structure.sql`
   end
 
   namespace :generate do
@@ -60,6 +65,8 @@ namespace :db do
   end
 
   def db_path
+    return ENV['DATABASE_URL'] if ENV['DATABASE_URL']
+
     yaml = YAML.load_file(File.join('config', 'database.yml'))
     yaml[ENV['RACK_ENV'] || 'development']
   end
